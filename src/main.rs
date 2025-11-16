@@ -69,6 +69,25 @@ impl Particle {
         // Decrease lifetime
         self.lifetime -= dt;
     }
+    
+    // Check if the particle is still alive
+    fn is_alive(&self) -> bool {
+        self.lifetime > 0.0
+    }
+    
+    // Draw the particle
+    fn draw(&self) {
+        // Calculate opacity based on remaining lifetime
+        let opacity = self.lifetime / self.max_lifetime;
+        let color = Color::new(
+            self.color.r,
+            self.color.g,
+            self.color.b,
+            self.color.a * opacity,
+        );
+        
+        draw_circle(self.pos.x, self.pos.y, self.size, color);
+    }
 }
 
 #[macroquad::main("Particle Fountain")]
