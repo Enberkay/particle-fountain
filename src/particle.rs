@@ -1,6 +1,6 @@
 use macroquad::prelude::*;
-use macroquad::rand::gen_range;
-use crate::physics::{apply_gravity, apply_air_resistance, update_position};
+
+use crate::physics::{apply_gravity, apply_air_resistance, update_position, GRAVITY};
 
 // Particle structure to represent each particle in our fountain
 #[derive(Debug)]
@@ -20,44 +20,16 @@ pub struct Particle {
 }
 
 impl Particle {
-    // Create a new particle at the given position with random properties
-    pub fn new(x: f32, y: f32) -> Self {
-        // Random color - vibrant colors for the fountain
-        let color = Color::new(
-            gen_range(0.5, 1.0), // R
-            gen_range(0.5, 1.0), // G
-            gen_range(0.5, 1.0), // B
-            1.0,                 // A (fully opaque initially)
-        );
-        
-        // Random velocity pointing upward with some spread
-        let angle = gen_range(-std::f32::consts::PI / 4.0, std::f32::consts::PI / 4.0) - std::f32::consts::PI / 2.0;
-        let speed = gen_range(200.0, 400.0);
-        let vel = Vec2::new(
-            angle.cos() * speed,
-            angle.sin() * speed,
-        );
-        
-        // Random lifetime between 1 and 3 seconds
-        let lifetime = gen_range(1.0, 3.0);
-        
-        // Random size
-        let size = gen_range(3.0, 8.0);
-        
-        Self {
-            pos: Vec2::new(x, y),
-            vel,
-            color,
-            lifetime,
-            max_lifetime: lifetime,
-            size,
-        }
-    }
     
     // Update the particle position and lifetime
     pub fn update(&mut self, dt: f32) {
+        self.update_with_gravity(dt, GRAVITY);
+    }
+    
+    // Update with custom gravity
+    pub fn update_with_gravity(&mut self, dt: f32, gravity: f32) {
         // Apply physics
-        apply_gravity(&mut self.vel, dt);
+        apply_gravity(&mut self.vel, dt, gravity);
         apply_air_resistance(&mut self.vel);
         update_position(&mut self.pos, &self.vel, dt);
         

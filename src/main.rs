@@ -3,7 +3,8 @@ mod physics;
 mod ui;
 mod input;
 mod game;
-
+mod controls;
+mod particle_generator;
 use game::run_game_loop;
 
 #[macroquad::main("Particle Fountain")]

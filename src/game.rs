@@ -1,12 +1,21 @@
 use macroquad::prelude::*;
 use crate::particle::Particle;
 use crate::ui::draw_ui;
-use crate::input::handle_input;
+use crate::input::handle_mouse_input;
+use crate::particle_generator::ParticleGenerator;
+use crate::controls::Controls;
+use crate::physics::GRAVITY;
 
 /// Run the main game loop
 pub async fn run_game_loop() {
     // Vector to store all particles
     let mut particles: Vec<Particle> = Vec::new();
+    
+    // Particle generator
+    let mut generator = ParticleGenerator::new();
+    
+    // Controls
+    let mut controls = Controls::new();
     
     // Mouse position tracking
     let mut mouse_pos: Vec2 = mouse_position().into();
@@ -15,15 +24,24 @@ pub async fn run_game_loop() {
         // Get delta time (time since last frame)
         let dt = get_frame_time();
         
+        // Handle keyboard input
+        controls.update();
+        
         // Handle input
         let prev_mouse_pos = mouse_pos;
         mouse_pos = mouse_position().into();
         
-        handle_input(&mut particles, prev_mouse_pos, mouse_pos);
+        handle_mouse_input(&mut particles, prev_mouse_pos, mouse_pos, &mut generator, &controls);
         
-        // Update all particles
+        // Check if we need to clear particles
+        if controls.clear_particles {
+            particles.clear();
+            generator.reset();
+        }
+        
+        // Update all particles with custom gravity
         for particle in &mut particles {
-            particle.update(dt);
+            particle.update_with_gravity(dt, GRAVITY * controls.gravity_multiplier);
         }
         
         // Remove dead particles
@@ -38,7 +56,7 @@ pub async fn run_game_loop() {
         }
         
         // Draw UI
-        draw_ui(particles.len());
+        draw_ui(particles.len(), controls.fountain_mode, controls.color_theme, controls.gravity_multiplier);
         
         next_frame().await
     }
