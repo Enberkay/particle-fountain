@@ -1,4 +1,5 @@
 mod particle;
+mod physics;
 use macroquad::prelude::*;
 use particle::Particle;
 

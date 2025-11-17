@@ -1,5 +1,6 @@
 use macroquad::prelude::*;
 use macroquad::rand::gen_range;
+use crate::physics::{apply_gravity, apply_air_resistance, update_position};
 
 // Particle structure to represent each particle in our fountain
 #[derive(Debug)]
@@ -55,16 +56,10 @@ impl Particle {
     
     // Update the particle position and lifetime
     pub fn update(&mut self, dt: f32) {
-        // Apply gravity to velocity (downward acceleration)
-        self.vel.y += 500.0 * dt;
-        
-        // Apply slight air resistance to make it look more natural
-        self.vel.x *= 0.99;
-        self.vel.y *= 0.99;
-        
-        // Update position based on velocity
-        self.pos.x += self.vel.x * dt;
-        self.pos.y += self.vel.y * dt;
+        // Apply physics
+        apply_gravity(&mut self.vel, dt);
+        apply_air_resistance(&mut self.vel);
+        update_position(&mut self.pos, &self.vel, dt);
         
         // Decrease lifetime
         self.lifetime -= dt;
