@@ -1,5 +1,6 @@
 use macroquad::prelude::*;
 use crate::particle_generator::{FountainMode, ColorTheme};
+use crate::effects::EffectMode;
 
 // Control state
 pub struct Controls {
@@ -7,6 +8,7 @@ pub struct Controls {
     pub color_theme: ColorTheme,
     pub gravity_multiplier: f32,
     pub clear_particles: bool,
+    pub effect_mode: EffectMode,
 }
 
 impl Controls {
@@ -16,6 +18,7 @@ impl Controls {
             color_theme: ColorTheme::Random,
             gravity_multiplier: 1.0,
             clear_particles: false,
+            effect_mode: EffectMode::None,
         }
     }
     

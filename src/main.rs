@@ -5,6 +5,8 @@ mod input;
 mod game;
 mod controls;
 mod particle_generator;
+mod effects;
+
 use game::run_game_loop;
 
 #[macroquad::main("Particle Fountain")]

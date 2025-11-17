@@ -1,6 +1,7 @@
 use macroquad::prelude::*;
 use macroquad::rand::gen_range;
 use crate::particle::Particle;
+use macroquad::prelude::Color;
 
 // Fountain modes
 #[derive(Debug, Clone, Copy)]
