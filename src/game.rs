@@ -49,8 +49,6 @@ pub async fn run_game_loop() {
             particle.update_with_gravity(dt, GRAVITY * controls.gravity_multiplier);
         }
         
-
-        
         // Remove dead particles
         particles.retain(|p| p.is_alive());
         

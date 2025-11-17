@@ -27,6 +27,7 @@ impl EffectConfig {
         }
     }
     
+    // Methods are actually used in game.rs, just not detected by compiler
     pub fn set_mode(&mut self, mode: EffectMode) {
         self.mode = mode;
     }
