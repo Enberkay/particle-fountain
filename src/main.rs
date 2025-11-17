@@ -1,7 +1,9 @@
 mod particle;
 mod physics;
+mod ui;
 use macroquad::prelude::*;
 use particle::Particle;
+use ui::draw_ui;
 
 #[macroquad::main("Particle Fountain")]
 async fn main() {
@@ -70,21 +72,7 @@ async fn main() {
         }
         
         // Draw UI
-        draw_text(
-            &format!("Particles: {}", particles.len()),
-            10.0,
-            20.0,
-            20.0,
-            WHITE,
-        );
-        
-        draw_text(
-            "Click and drag to create a fountain of particles!",
-            10.0,
-            screen_height() - 20.0,
-            20.0,
-            WHITE,
-        );
+        draw_ui(particles.len());
         
         next_frame().await
     }
