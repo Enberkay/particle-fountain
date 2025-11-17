@@ -1,6 +1,6 @@
 use macroquad::prelude::*;
 
-use crate::physics::{apply_gravity, apply_air_resistance, update_position, GRAVITY};
+use crate::physics::{apply_gravity, apply_air_resistance, update_position};
 
 // Particle structure to represent each particle in our fountain
 #[derive(Debug)]
@@ -20,11 +20,6 @@ pub struct Particle {
 }
 
 impl Particle {
-    
-    // Update the particle position and lifetime
-    pub fn update(&mut self, dt: f32) {
-        self.update_with_gravity(dt, GRAVITY);
-    }
     
     // Update with custom gravity
     pub fn update_with_gravity(&mut self, dt: f32, gravity: f32) {

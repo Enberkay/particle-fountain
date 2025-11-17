@@ -19,7 +19,7 @@ pub async fn run_game_loop() {
     let mut controls = Controls::new();
     
     // Effect configuration
-    let mut effect_config = EffectConfig::new();
+    let effect_config = EffectConfig::new();
     
     // Mouse position tracking
     let mut mouse_pos: Vec2 = mouse_position().into();
@@ -49,11 +49,6 @@ pub async fn run_game_loop() {
             particle.update_with_gravity(dt, GRAVITY * controls.gravity_multiplier);
         }
         
-        // Update all particles with custom gravity
-        for particle in &mut particles {
-            particle.update_with_gravity(dt, GRAVITY * controls.gravity_multiplier);
-        }
-        
 
         
         // Remove dead particles
@@ -61,11 +56,6 @@ pub async fn run_game_loop() {
         
         // Drawing
         clear_background(BLACK);
-        
-        // Draw all particles
-        for particle in &particles {
-            particle.draw();
-        }
         
         // Draw special effects
         effect_config.draw_effects(&particles);

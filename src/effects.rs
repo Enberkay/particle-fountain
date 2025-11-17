@@ -1,9 +1,10 @@
 use macroquad::prelude::*;
-use macroquad::rand::gen_range;
+
 use crate::particle::Particle;
 
 // Effects that can be applied to particles
 #[derive(Debug, Clone, Copy, PartialEq)]
+#[allow(dead_code)]
 pub enum EffectMode {
     None,       // No special effects
     Trail,      // Particles leave trails behind them
